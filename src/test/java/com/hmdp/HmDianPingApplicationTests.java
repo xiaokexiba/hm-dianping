@@ -27,22 +27,22 @@ class HmDianPingApplicationTests {
 //        shopService.saveShop2Redis(1L, 10L);
     }
 
-    @Test
-    void testIdWorker() throws InterruptedException {
-        CountDownLatch latch = new CountDownLatch(300);
-        Runnable task = () -> {
-            for (int i = 0; i < 100; i++) {
-                long id = redisIdWorker.nextId("order");
-                System.out.println("id = " + id);
-            }
-            latch.countDown();
-        };
-        long start = System.currentTimeMillis();
-        for (int i = 0; i < 300; i++) {
-            es.submit(task);
-        }
-        latch.wait();
-        long end = System.currentTimeMillis();
-    }
+//    @Test
+//    void testIdWorker() throws InterruptedException {
+//        CountDownLatch latch = new CountDownLatch(300);
+//        Runnable task = () -> {
+//            for (int i = 0; i < 100; i++) {
+//                long id = redisIdWorker.nextId("order");
+//                System.out.println("id = " + id);
+//            }
+//            latch.countDown();
+//        };
+//        long start = System.currentTimeMillis();
+//        for (int i = 0; i < 300; i++) {
+//            es.submit(task);
+//        }
+//        latch.wait();
+//        long end = System.currentTimeMillis();
+//    }
 
 }
