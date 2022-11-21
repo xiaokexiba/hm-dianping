@@ -17,6 +17,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.Collections;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * <p>
@@ -49,6 +53,10 @@ public class VoucherOrderServiceImpl extends ServiceImpl<VoucherOrderMapper, Vou
         SECKILL_SCRIPT.setResultType(Long.class);
     }
 
+    private BlockingQueue<VoucherOrder> orderTasks = new ArrayBlockingQueue<>(1024 * 1024);
+
+    private static final ExecutorService SECKILL_ORDER_EXECUTOR = Executors.newSingleThreadExecutor();
+
     /**
      * 秒杀下单
      *
@@ -70,9 +78,17 @@ public class VoucherOrderServiceImpl extends ServiceImpl<VoucherOrderMapper, Vou
             return Result.fail(r == 1 ? "库存不足" : "不能重复下单");
         }
         // 2.2、为0，有购买资格，把下单信息保存到堵塞队列中
-        // TODO
+        // 创建订单对象
+        VoucherOrder voucherOrder = new VoucherOrder();
+        // 订单ID
         long orderId = redisIdWorker.nextId("order");
-        // 3、返回订单ID
+        voucherOrder.setVoucherId(orderId);
+        // 用户ID
+        voucherOrder.setUserId(userId);
+        // 代金券ID
+        voucherOrder.setVoucherId(voucherId);
+        // 加入阻塞队列中
+        orderTasks.add(voucherOrder);
         return Result.ok(orderId);
     }
 //    public Result seckillVoucher(Long voucherId) {
