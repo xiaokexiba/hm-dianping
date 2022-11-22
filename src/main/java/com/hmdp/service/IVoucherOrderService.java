@@ -24,7 +24,6 @@ public interface IVoucherOrderService extends IService<VoucherOrder> {
 
     /**
      * @param voucherId
-     * @return
      */
-    Result createVoucherOrder(Long voucherId);
+    void createVoucherOrder(VoucherOrder voucherId);
 }
