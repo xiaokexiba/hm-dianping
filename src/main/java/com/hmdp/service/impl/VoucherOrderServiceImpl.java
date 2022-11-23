@@ -143,7 +143,7 @@ public class VoucherOrderServiceImpl extends ServiceImpl<VoucherOrderMapper, Vou
                     // 解析数据
                     MapRecord<String, Object, Object> record = list.get(0);
                     Map<Object, Object> value = record.getValue();
-                    VoucherOrder voucherOrder = BeanUtil.fillBeanWithMap(value, new VoucherOrder(), true);
+                    VoucherOrder     voucherOrder = BeanUtil.fillBeanWithMap(value, new VoucherOrder(), true);
                     // 3.创建订单
                     handleVoucherOrder(voucherOrder);
                     // 4.确认消息 XACK stream.orders g1 id

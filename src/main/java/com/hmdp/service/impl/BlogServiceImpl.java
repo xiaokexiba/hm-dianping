@@ -39,7 +39,6 @@ import static com.hmdp.utils.RedisConstants.FEED_KEY;
  * @since 2021-12-22
  */
 @Service
-@SuppressWarnings("all")
 public class BlogServiceImpl extends ServiceImpl<BlogMapper, Blog> implements IBlogService {
 
     @Resource
