@@ -21,4 +21,22 @@ public interface IBlogService extends IService<Blog> {
      * @return 统一返回类
      */
     Result queryBlogById(Long id);
+
+    /**
+     * @param current
+     * @return
+     */
+    Result queryHotBlog(Integer current);
+
+    /**
+     * @param id
+     * @return
+     */
+    Result likeBlog(Long id);
+
+    Result queryBlogLikes(Long id);
+
+    Result saveBlog(Blog blog);
+
+    Result queryBlogOfFollow(Long max, Integer offset);
 }
